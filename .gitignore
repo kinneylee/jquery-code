@@ -1,4 +1,1 @@
-# #号开头是注释：
-# node_modules包含依赖的包，不需要git
-/node_modules
-/index.html
+﻿
