@@ -1,6 +1,7 @@
 /**
  * Created by Duncan on 2016/6/27.
  */
+    //保证undefined不会被修改
     ( function( window, undefined ){
         var $ = function ( selector ) {
             // 返回jquery原型上init方法的实例。这里把init函数当做构造函数
