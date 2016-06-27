@@ -34,4 +34,23 @@
         $.fn.init.prototype = $.fn;
  ```
 $ 首先是一个函数，在jquery里他体现了函数的两种身份，一个是普通函数，一个是对象。
-![jquery原型图](images/01.png)
+![jquery原型图](./images/01.png)
+
+> ** jquery-1.1**
+
+```js
+$.extend = $.fn.extend = function ( o1,o2 ) {
+            var arg = arguments;
+            if(arg.length == 1){
+                for(var key in arg[0]){
+                    this[key] = arg[0][key];
+                }
+            }else {
+                for(var key in o2){
+                    o1[key] = o2[key];
+                }
+            }
+        };
+```
+这是个简易版本，没考虑深层复制
+
