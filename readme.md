@@ -12,8 +12,8 @@
 
 #### 文件夹的简要说明： 
 
-- demo文件夹主要是测试文件（简单的检验）
-- jquery文件夹放的各个版本
+- demo 主要是测试文件（简单的检验）
+- jquery 存放各个版本
 
 #### jquery各个版本的说明：
 
@@ -34,7 +34,7 @@
         $.fn.init.prototype = $.fn;
  ```
 $ 首先是一个函数，在jquery里他体现了函数的两种身份，一个是普通函数，一个是对象。
-![jquery原型图](./images/01.png)
+![](./images/01.png)
 
 > ** jquery-1.1**
 
@@ -53,4 +53,27 @@ $.extend = $.fn.extend = function ( o1,o2 ) {
         };
 ```
 这是个简易版本，没考虑深层复制
+
+> ** jquery-1.2** 
+
+```js
+	$.extend({
+            each: function  (arr,fn){
+                for(var i=0;i<arr.length;i++){
+                    // 通过fn的返回值可以提前结束循环
+                    if(fn.call(arr[i],i,arr[i]) === false){
+                        break;
+                    }
+                }
+                return arr;
+            }
+        });
+        $.fn.extend({
+            each: function (fn) {
+                return $.each(this,fn);
+            }
+        });
+```
+
+每个函数的返回值保证jquery可以链式编程（当然得除掉那些本身就需要返回具体值的函数）
 
