@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../jquery/jquery-1.2.js"></script>
+</head>
+<body>
+    <div class="one">1</div>
+    <div class="one">one</div>
+    <div id="two">2</div>
+    <script>
+        window.onload = function () {
+            $.fn.extend({
+                html: function (html) {
+                    if( html === undefined ){
+                        return this[0].innerHTML;
+                    }else {
+                        return $.each( this, function () {
+                            this.innerHTML = html;
+                        });
+                    }
+                }
+            });
+            $('div').html('each');
+        }
+    </script>
+</body>
+</html>
