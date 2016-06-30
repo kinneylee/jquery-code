@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../jquery/jquery-1.4.js"></script>
+</head>
+<body>
+	<div>1</div>
+	<div>2</div>
+	<div>3
+		<p>this is p </p>
+	</div>
+	<script>
+		var oDiv = $('div').get(1);
+		console.log(oDiv);
+		var $oDiv = $('div').eq(1);
+		console.log($oDiv);	
+		var span = $('<span>hello world</span>');
+		// span.appendTo('div');
+		// $('div').append(span);
+		// $('div').prepend(span);
+		$(span).prependTo('div');
+	</script>
+</body>
+</html>
