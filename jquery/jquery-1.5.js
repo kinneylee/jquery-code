@@ -191,7 +191,8 @@
                 var targets = $( param )
                 var arr = [];
                 $.each(targets, function (index,element) {
-                    var docfrag = document.createDocumentFragment();//保证添加的顺序
+                    //保证添加的顺序
+                    var docfrag = document.createDocumentFragment();
                     $.each( that, function () {
                         var node = null;
                         if( targets.length-1 === index){
@@ -219,10 +220,10 @@
             }
         });
         //样式操作
-        $.extend({
+        $.fn.extend({
              css: function( key, val ) {
                     var arg = arguments;
-                    // 一个参数的情况： 分两种
+                    // 一个参数的情况： 分三种
                     if (arg.length === 1) {
                         // 第一个参数是一个对象
                         if ($.isObj(arg[0])) {
@@ -279,6 +280,97 @@
                         this.innerHTML = html;
                     });
                 }
+            },
+            hasClass: function ( cname ) {//只要有就返回true
+                var flag = false;
+                this.each(function () {
+                    var item = $.trim( this.className );
+                    var arr = item.split(/\s+/g);
+                    for( var i=0; i<arr.length; i++ ){
+                        if( arr[i] == $.trim( cname )){
+                            flag = true;
+                            //只要有这个class就终止遍历
+                            return false;
+                        }
+                    }
+                });
+                return flag;
+            },
+            addClass: function ( cname ) {
+                //是实现了添加一个类的情况
+                var cname = $.trim( cname );
+                if( $.isString( cname)){
+                    // 如果没有这个class，直接加上
+                    if( this.hasClass(cname) === false){
+                        this.each(function () {
+                            this.className += ' ' + cname;
+                        });
+                    }else {
+                        this.each(function () {
+                            var className = $.trim(this.className);
+                            var arr = className.split(/\s+/g);
+                            for(var i=0;i<arr.length;i++){
+                                if(arr[i] === cname){
+                                    //去除相同的类名
+                                    break;
+                                }else {
+                                    className += ' ' + cname;
+                                    this.className = className;
+                                }
+                            }
+                        });
+                    }
+                }
+                return this;
+            },
+            removeClass: function ( cname ) {
+                if( $.isString(cname)){
+                    this.each(function () {
+                        var className = this.className;
+                        // arr1 是单个DOM对象的类名分隔的数组，arr2是参数分割的数组。（支持移除多个）
+                        var arr1 = className.split(/\s+/g);
+                        var arr2 = $.trim( cname ).split(/\s+/g);
+                        for(var i=0;i<arr1.length;i++){
+                            for(var j=0;j<arr2.length;j++){
+                                if(arr1[i] === arr2[j]){
+                                    arr1[i] = '';
+                                }
+                            }
+                        }
+                        this.className = arr1.join(' ');
+                    });
+                }
+                return this;
+            },
+            toggleClass: function () {
+                // 函数和那个布尔型的可选参数没有考虑
+                var p = arguments;
+                if( p.length ===1 && $.isString( p[0] ) ){
+                    var arr = $.trim( p[0] ).split( /\s+/g );
+                    // 只有一个类名
+                    if( arr.length === 1){
+                        var that = this;
+                        this.each( function () {
+                            if( $(this).hasClass( p[0]) ){
+                                that.removeClass( p[0] );
+                            }else {
+                                that.addClass( p[0] );
+                            }
+                        });
+                        // 有两个类名，则这两个类交替
+                    } else if (arr.length ===2 ){
+                        this.each(function () {
+                            if( $(this).hasClass( arr[0]) ){
+                                $(this).removeClass( arr[0] );
+                                $(this).addClass( arr[1] );
+                            }else {
+                                $(this).addClass( arr[0] );
+                                $(this).removeClass( arr[1] );
+                            }
+                        });
+                    }
+                }
+                return this;
             }
         });
         //将$.fn.init的原型指向$的原型，这样通过init实例化出来的实例就可以访问$原型的成员了
