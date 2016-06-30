@@ -107,6 +107,18 @@
                     }
                 }
                 return arr;
+            },
+            // 获取样式
+            getStyle: function( obj, key){
+                if( obj.currentStyle ){
+                    return obj.currntStyle[key];
+                }else {
+                    return window.getComputedStyle( obj, null )[key];
+                }
+            },
+            // 去除字符串左右空格
+            trim: function( str ){
+                return str.replace( /^(\s+)|(\s+$)/g,'');
             }
         });
         $.fn.extend({
@@ -135,6 +147,7 @@
                 return typeof fun === 'function';
             }
         });
+       
         //将$.fn.init的原型指向$的原型，这样通过init实例化出来的实例就可以访问$原型的成员了
         $.fn.init.prototype = $.fn;
         window.$ = window.jQuery = $;
