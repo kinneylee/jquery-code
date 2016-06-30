@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="one"></div>
+    <div></div>
+    <div></div>
+    <script src="../jquery/jquery-1.3.js"></script>
+    <script>
+    	//测试选择器分支--是jquery的情况。
+    	var divs = $('div');
+    	console.dir(divs);
+    	var $div = $(divs);
+    	console.dir($div);
+    	// 测试选择器参数是类数组时
+    	var aDiv = document.getElementsByTagName('div');
+    	console.dir($(aDiv));
+    	// DOM
+    	var one = document.getElementById('one');
+    	console.dir($(one));
+    </script>
+</body>
+
+</html>
