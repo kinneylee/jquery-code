@@ -373,6 +373,78 @@
                 return this;
             }
         });
+        // 事件模块
+        $.fn.extend({
+            on: function (type,fn) {
+                var addEvent = function (param,element,fn1) {
+                    param.each(function () {
+                        if(this.addEventListener){
+                            this.addEventListener(element,fn1,false);
+                        }else {
+                            this.attachEvent('on'+element,fn1);
+                        }
+                    });
+                }
+                var p = arguments;
+                // 只绑定一个事件
+                if(p.length ===1 && $.isObj(p[0])){
+                    for(var key in p[0]){
+                        addEvent(this,key,p[0][key])
+                    }
+                }else if(p.length ===2 && $.isString(p[0])){
+                    // 将事件拆开，分别绑定
+                    var reg = /\b\w+\b/g;
+                    var arr = p[0].match(reg);
+                    for(var i=0;i<arr.length;i++){
+                        addEvent(this,arr[i],fn);
+                    }
+                }
+                return this;
+            },
+            off: function (type,fn) {
+                var p = arguments;
+                var reg = /\b\w+\b/g;
+                var arr = p[0].match(reg);
+                for(var i=0;i<arr.length;i++){
+                    this.each(function () {
+                        if(this.removeEventListener){
+                            this.removeEventListener(arr[i],fn);
+                        }else{
+                            this.detachEvent('on'+arr[i],fn);
+                        }
+                    });
+                }
+                return this;
+            },
+            one: function (type,fn) {
+                var oriFn = fn;
+                fn = function () {
+                    // this是调用的那个单个dom元素。
+                    oriFn.apply(this,arguments);
+                    jQuery(this).off(type,fn);
+                };
+                return this.on(type,fn);
+            },
+            hover: function (fn1,fn2) {
+                this.mouseover(fn1);
+                this.mouseout(fn2);
+            },
+            toggle: function () {
+                var p = arguments;
+                this.click(function () {
+                    if(!this.i){//保证在实例有多个的情况下，每个切换不受对方干扰
+                        this.i = 0;
+                    }
+                    p[this.i++ % p.length].call(this);
+                });
+            }
+        });
+        var arr = ['click','mouseover','mouseout','mousemove','blur','dblclick'];
+        $.each(arr, function (index,element) {
+            $.fn[element] = function (fn) {
+                return  this.on(element,fn);
+            }
+        });
         //将$.fn.init的原型指向$的原型，这样通过init实例化出来的实例就可以访问$原型的成员了
         $.fn.init.prototype = $.fn;
         window.$ = window.jQuery = $;
