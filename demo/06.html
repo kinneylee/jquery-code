@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+        .one {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        .two {
+            width: 300px;
+            background-color: blue;
+        }
+        .onetwo {
+            border: 2px solid #e92322;
+        }
+    </style>
+    <script src="../jquery/jquery-1.5.js"></script>
+    <script>
+        window.onload = function () {
+            $('input')[0].onclick = function () {
+                $('div').toggleClass('two onetwo');
+            }
+            // 女孩喜欢吃苹果，楼主会削两个，一 人一个。 女孩喜欢这温馨浪漫的感觉。只是发现楼主总是先把两个苹果各咬一口再递给她。 终于有一天，趁楼主出去接电话时，她拿过楼主的苹果咬了一口，感觉不如自己的脆甜可口。 原来，它总是把最好的留给她，瞬间泪水无声滑过脸庞女孩喜欢吃苹果，楼主会削两个，一 人一个。 女孩喜欢这温馨浪漫的感觉。只是发现楼主总是先把两个苹果各咬一口再递给她。 终于有一天，趁楼主出去接电话时，她拿过楼主的苹果咬了一口，感觉不如自己的脆甜可口。 原来，它总是把最好的留给她，瞬间泪水无声滑过脸庞，这么好的男人为什么偏偏硬不起来？
+　　 
+// 　　 awesomes
+        }
+    </script>
+</head>
+<body>
+    <div class="one two"></div>
+    <div class="onetwo"></div>
+    <div class="one"></div>
+    <input type="button" value="submit"/>
+</body>
+</html>
